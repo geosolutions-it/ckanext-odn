@@ -1,0 +1,168 @@
+
+
+.masthead {
+    background-color: #e2e2e2;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#e2e2e2), to(#cccccc));
+    background-image: -webkit-linear-gradient(top, #e2e2e2, #cccccc);
+    background-image: -moz-linear-gradient(top, #e2e2e2, #cccccc);
+    background-image: -ms-linear-gradient(top, #e2e2e2, #cccccc);
+    background-image: -o-linear-gradient(top, #e2e2e2, #cccccc);
+    background-image: linear-gradient(top, #e2e2e2, #cccccc);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#e2e2e2', EndColorStr='#cccccc');
+    /*margin-bottom: 18px;*/
+    -moz-box-shadow: 0px 2px 15px #dddddd;
+    -webkit-box-shadow: 0px 2px 15px #dddddd;
+    box-shadow: 0px 2px 15px #dddddd;
+    border-bottom: 1px solid #ccc;
+}
+
+.homepage [role=main] {
+    padding-top: 0px;
+}
+
+.odn_header_title {
+    text-align: right;
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+
+/* per il titolo*/
+.masthead .nav-collapse {
+    padding-top: 0px;
+}
+
+.masthead a {
+     color: brown;
+     text-decoration: none;
+}
+
+.masthead .odn_header_nav {
+    float: right;
+    margin-right: -15px;
+    margin-top: -10px;
+}
+.masthead .odn_header_nav .nav-pills {
+    margin-right: 0;
+}
+
+.masthead .nav>li>a {
+    color: brown;
+}
+.navbar .nav>li>a {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+.nav-pills>li>a {
+}
+
+.odn_right_square {
+    text-align: center;
+    /*min-height: 173px;*/
+}
+
+.odn_right_square div {
+    /*min-height: 168px;*/
+}
+
+.odn_no_decoration {
+     text-decoration: none;
+}
+a.odn_no_decoration:hover  {
+   text-decoration:none;
+}
+
+.odn_group_grid {
+    margin-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+ 
+    background-color: #f3f3f3;
+
+    overflow: auto;
+}
+
+.homepage .odn_group_grid .heading {
+    margin-top: 0;
+    margin-bottom: 7px;
+    margin-left: 10px;
+    font-size: 24px;
+    line-height: 40px;
+}
+
+.odn_group_item {
+    background-color: #eaeaea;
+    padding-left: 20px;
+    padding-right: 15px;
+    margin-bottom: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 242px;
+    min-height: 150px;
+    border-radius: 4px;
+    border: 1px solid #cccccc;
+    float: left;
+}
+
+.odn_latest_grid {
+    margin-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-right: 10px;
+
+    background-color: #f3f3f3;
+
+    overflow: auto;
+}
+
+.odn_latest_grid .dataset-heading a {
+    color: #c14531;
+}
+
+.odn_source {
+    font-size: 0.9em;
+    font-style: italic;
+
+    color: brown;
+    margin-top: -8px;
+    margin-bottom: 8px;
+
+    display: block;
+}
+
+.odn_source_value {
+    font-size: 0.9em;
+    font-style: italic;
+    font-weight: bold;
+
+    color: brown;
+    margin-top: -8px;
+    margin-bottom: 8px;
+}
+
+.odn_geo_title {
+  display: inline-block;
+  vertical-align: text-bottom;
+  position: relative;
+  top: -2px;
+  width: 16px;
+  height: 16px;
+  background-image: url("/odn/img/geo.png");
+  background-repeat: no-repeat;
+  margin-right: 5px;
+}
+
+.odn_license_badge {
+
+    float: right;
+    margin-left: 5px;
+}
+
+.odn_resnum_badge {
+    background-color: brown;
+}
+
+.dataset-resources .odn_resnum_badge {
+    display: inline-block;
+}

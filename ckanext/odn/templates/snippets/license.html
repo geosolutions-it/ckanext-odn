@@ -1,0 +1,24 @@
+{% ckan_extends %}
+
+{# Aggiunge icona per licenze CC* #}
+
+{% block license_content_inner %}
+    {% if pkg_dict.isopen %}
+      <a href="http://opendefinition.org/okd/" title="{{ _('This dataset satisfies the Open Definition.') }}">
+          <img class="open-data" src="{{ h.url_for_static('/base/images/od_80x15_blue.png') }}" alt="[Open Data]" />
+      </a>
+    {% endif %}
+
+    {% set url = pkg_dict.license_url if 'license_url' in pkg_dict else "http://opendefinition.org/licenses/" %}
+    {% set licid = pkg_dict.license_id|replace("-", "_") %}
+
+    {% if licid in ('cc_by_nc_nd', 'cc_by_nc', 'cc_by_nc_sa', 'cc_by_nd', 'cc_by', 'cc_by_sa', 'cc_sa_nd') %}
+        <a href="{{url}}" title="{{ _('This dataset satisfies the Open Definition.') }}">
+           <img class="open-data" src="/odn/img/license/{{licid}}.png" alt="[{{licid}}]" />
+        </a>
+   {% endif %}
+
+   {{ license_string(pkg_dict) }}
+
+{% endblock %}
+

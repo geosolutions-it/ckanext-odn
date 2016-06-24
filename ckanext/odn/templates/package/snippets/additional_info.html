@@ -1,0 +1,62 @@
+<section class="additional-info">
+  <h3>{{ _('Additional Info') }}</h3>
+  <table class="table table-striped table-bordered table-condensed">
+    <tbody>
+      {% block package_additional_info %}
+
+        {% set gnurl = h.get_pkg_dict_extra(pkg_dict, 'gn_url') %}
+        {% set guid  = h.get_pkg_dict_extra(pkg_dict, 'guid') %}
+
+        {% if gnurl %}
+          <tr>
+            <th scope="row" class="dataset-label">Informazioni sul dato</th>
+            <td class="dataset-details" property="dc:relation"><a href='{{gnurl}}/srv/ita/metadata.show.minimal?uuid={{guid}}' target='_blank'>Metadato ISO Originale</a></td>
+          </tr>
+        {% endif %}
+
+        {% if guid %}
+          <tr>
+            <th scope="row" class="dataset-label">UUID d'origine</th>
+            <td class="dataset-details" property="dc:identifier">{{guid}}</td>
+          </tr>
+        {% endif %}
+
+        {% set rtype = h.get_pkg_dict_extra(pkg_dict, 'resource-type') %}
+        {% if rtype %}
+          <tr>
+            <th scope="row" class="dataset-label">Tipo risorsa</th>
+            <td class="dataset-details">{{rtype}}</td>
+          </tr>
+        {% endif %}
+
+        {% set srs = h.get_pkg_dict_extra(pkg_dict, 'spatial-reference-system') %}
+        {% if srs %}
+          <tr>
+            <th scope="row" class="dataset-label">Sistema di riferimento</th>
+            <td class="dataset-details">{{srs}}</td>
+          </tr>
+        {% endif %}
+
+        {% if pkg_dict.author %}
+          <tr>
+            <th scope="row" class="dataset-label">Referente</th>
+            <td class="dataset-details" property="dc:creator">{{ h.mail_to(email_address=pkg_dict.author_email, name=pkg_dict.author) }}</td>
+          </tr>
+        {% endif %}
+
+        {% if pkg_dict.author_email %}
+          <tr>
+            <th scope="row" class="dataset-label">Contatto referente</th>
+            <td class="dataset-details" property="dc:creator">{{ h.mail_to(email_address=pkg_dict.author_email, name=pkg_dict.author_email) }}</td>
+          </tr>
+        {% endif %}
+
+          <tr>
+            <th scope="row" class="dataset-label">Data aggiornamento</th>
+            <td class="dataset-details" property="dc:creator">{{ pkg_dict.version }}</td>
+          </tr>
+
+      {% endblock %}
+    </tbody>
+  </table>
+</section>

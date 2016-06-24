@@ -1,0 +1,80 @@
+{% extends "page.html" %}
+{% set homepage_style = ( g.homepage_style or '1' ) %}
+
+{% block subtitle %}{{ _("Welcome") }}{% endblock %}
+
+{% block maintag %}{% endblock %}
+{% block toolbar %}{% endblock %}
+
+{% block content %}
+<div class="homepage layout-{{ homepage_style }}">
+    <div class="container">
+        {{ self.flash() }}
+    </div>
+    {% block primary_content %}
+
+    <div role="main" class="hero">
+        <div class="container">
+            <div class="row row1">
+                <div class="span8 col1">
+                    {% snippet 'home/snippets/search.html' %}
+                </div>
+                <div class="span4">
+                    {% snippet 'home/snippets/map.html' %}
+                </div>
+            </div>
+
+            <div class="row row2">
+                <div class="span8 col1">
+
+                    <div class="odn_group_grid module_search box">
+                        <h3 class="heading">Categorie</h3>
+
+                        {% set groups = h.group_list(6) %}
+
+                        {% for group in groups %}
+                            {% set url = h.url_for(controller='group', action='read', id=group.name) %}
+
+                            <div class="odn_group_item">
+                                <a href="{{ url }}"><h3>{{ group.display_name }}</h3></a>
+                                {% if group.description %}
+                                  <p>{{ h.markdown_extract(group.description, extract_length=80) }}</p>
+                                {% endif %}
+
+                                <span class="label label-info">{{group.package_count}} dataset</span>
+                            </div>
+
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="span4 col2">
+                    {% snippet 'home/snippets/odn_img.html', img='/odn/img/chi_siamo.png',  href='/about'%}
+                    {% snippet 'home/snippets/odn_img.html', img='/odn/img/istruzioni.png', href='/istruzioni'%}
+                    {% snippet 'home/snippets/odn_img.html', img='/odn/img/opendata.png',   href='/opendata'%}
+                </div>
+            </div>
+            
+            <div class="row row3">
+                <div class="span12 col1">
+                    <div class="odn_latest_grid box">
+
+                        {% set datasets = h.recent_updates(5) %}
+
+                        <h3 class="heading">Ultimi aggiornamenti</h3>
+
+                        <ul class="{{ list_class or 'dataset-list unstyled' }}">
+                            {% for dataset in datasets %}
+                                {% snippet 'home/snippets/odn_dataset_updated.html', package=dataset, truncate_title=100, hide_resources=true %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% endblock %}
+</div>
+{% endblock %}

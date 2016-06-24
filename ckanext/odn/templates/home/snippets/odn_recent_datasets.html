@@ -1,0 +1,9 @@
+{% set datasets = h.recent_updates(5) %}
+
+Ultimi aggiornamenti ({{datasets|count}})
+
+<ul class="{{ list_class or 'dataset-list unstyled' }}">
+    {% for dataset in datasets %}
+        {% snippet 'home/snippets/odn_dataset_updated.html', package=dataset, truncate_title=80, hide_resources=true %}
+    {% endfor %}
+</ul>

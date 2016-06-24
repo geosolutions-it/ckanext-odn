@@ -1,0 +1,28 @@
+{% ckan_extends %}
+
+{# Elimina il selettore di lingua ==================================================== #}
+
+{% block footer_lang %}
+{% endblock %}
+
+{# Aggiunge login e credits ========================================================== #}
+
+{% block footer_attribution %}
+
+  <p>Powered by <a class="hide-text ckan-footer-logo" href="http://ckan.org">CKAN</a>
+      and <strong><a href="http://www.geo-solutions.it/">GeoSolutions</a></strong></p>
+
+    {% if not c.userobj %}
+            <nav class="account not-authed">
+            <ul class="unstyled">
+              {% block header_account_notlogged %}
+              <li>{% link_for _('Log in'), controller='user', action='login' %}</li>
+              {% if h.check_access('user_create') %}
+                <li>{% link_for _('Register'), controller='user', action='register', class_='sub' %}</li>
+              {% endif %}
+              {% endblock %}
+            </ul>
+          </nav>
+    {% endif %}
+
+{% endblock %}

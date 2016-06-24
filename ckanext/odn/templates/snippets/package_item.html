@@ -1,0 +1,51 @@
+{% ckan_extends %}
+
+{# Aggiunge l'icona GEO ======================================================================== #}
+{% block heading_title %}
+
+    {% if h.get_pkg_dict_extra(package, 'spatial') %}
+        <i class='odn_geo_title'></i>
+    {% endif %}
+    
+   {{ super() }}
+
+{% endblock %}
+
+
+{# Aggiunge il nodo di origine ================================================================= #}
+{% block notes %}
+
+    {% set origine = h.get_pkg_dict_extra(package, 'nodo_origine_cerco') %}
+    {% if origine %}
+        <span class="odn_source">Nodo: <i class="odn_source_value">{{origine}}</i></span>
+    {% endif %}
+
+   {{ super() }}
+
+{% endblock %}
+
+{# Aggiunge icone per licenze CC* ============================================================== #}
+{% block resources_inner %}
+
+    <li class="label label-info odn_resnum_badge">{{ package.resources|length }}</li>
+
+   {{ super() }}
+
+    {% if package.isopen %}
+        <i class ="odn_license_badge">
+              <img class="open-data" src="{{ h.url_for_static('/base/images/od_80x15_blue.png') }}" alt="[Open Data]" />
+        </i>
+    {% endif %}
+
+    {% if package.license_id %}
+        {% set url = package.license_url if 'license_url' in package else "http://opendefinition.org/licenses/" %}
+        {% set licid = package.license_id|replace("-", "_") %}
+
+        {% if licid in ('cc_by_nc_nd', 'cc_by_nc', 'cc_by_nc_sa', 'cc_by_nd', 'cc_by', 'cc_by_sa', 'cc_sa_nd') %}
+            <i class="odn_license_badge">
+               <img class="open-data" src="/odn/img/license/{{licid}}.png" alt="[{{licid}}]" />
+            </i>
+        {% endif %}
+   {% endif %}
+
+{% endblock %}

@@ -50,7 +50,7 @@ class OdnHarvesterPlugin(plugins.SingletonPlugin):
         if mail:
             package_dict['author_email'] = mail
 
-        if lenght(iso_values['dataset-reference-date']):
+        if iso_values['dataset-reference-date'] and len(iso_values['dataset-reference-date']):
             package_dict['version'] = "{} - {}".format(
                 iso_values['dataset-reference-date'][0]['type'],
                 iso_values['dataset-reference-date'][0]['value'])

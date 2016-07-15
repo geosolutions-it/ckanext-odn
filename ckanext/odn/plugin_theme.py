@@ -19,7 +19,8 @@ class OdnThemePlugin(plugins.SingletonPlugin):
     # ITemplateHelpers
     def get_helpers(self):
         return {'recent_updates': helpers.recent_updates,
-                'group_list': helpers.group_list}
+                'group_list': helpers.group_list,
+                'get_odn_config': helpers.get_odn_config}
 
 
 

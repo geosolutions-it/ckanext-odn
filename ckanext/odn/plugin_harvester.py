@@ -108,7 +108,7 @@ class OdnHarvesterPlugin(plugins.SingletonPlugin):
             resource_type = 'TOLOMEO:preset'
             resource['verified'] = True
             resource['verified_date'] = datetime.now().isoformat()
-            # resource_format = 'mappa'
+            resource_format = 'TOLOMEO:preset'
         # GN specific WMS type
         elif resource_locator.get('protocol','') == 'OGC:WMS-1.3.0-http-get-map' or \
              resource_locator.get('protocol','') == 'OGC:WMS-1.1.1-http-get-map' :

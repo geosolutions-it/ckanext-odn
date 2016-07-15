@@ -1,6 +1,8 @@
 import logging
 import operator
 
+from pylons import config
+
 import ckan
 import ckan.model as model
 import ckan.plugins as p
@@ -60,3 +62,12 @@ def group_list(count=1):
 
     return groups_ret
 
+
+def get_odn_config():
+    '''
+        Returns a dict with all configuration options related to ODN,
+        that is those starting with 'odn.')
+    '''
+    namespace = 'odn.'
+    return dict([(k.replace(namespace, ''), v) for k, v in config.iteritems()
+                 if k.startswith(namespace)])

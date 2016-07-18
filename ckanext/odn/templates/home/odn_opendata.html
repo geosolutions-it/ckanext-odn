@@ -1,0 +1,20 @@
+{% extends "page.html" %}
+
+{% block subtitle %} OpenData {% endblock %}
+
+{% block breadcrumb_content %}
+  <li class="active">{% link_for _('OpenData'), controller='ckanext.odn.plugin_theme:ODNController', action='opendata' %}</li>
+{% endblock %}
+
+{% block primary %}
+  <article class="module">
+    <div class="module-content">
+      {% block about %}
+          <h1 class="page-heading">{{ _('OpenData') }}</h1>
+          {% snippet 'home/snippets/opendata_text.html' %}
+      {% endblock %}
+    </div>
+  </article>
+{% endblock %}
+
+{% block secondary %}{% endblock %}

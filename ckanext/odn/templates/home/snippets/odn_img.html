@@ -1,5 +1,9 @@
-<div class="module module-narrow module-shallow box odn_right_square">
-  <div class="module-content search-form" href="{{href}}">
-        <img src="{{img}}"/>
-  </div>
-</div>
+{% set controller = controller or 'ckanext.odn.plugin_theme:ODNController' %}
+
+<a class="odn_no_decoration" href="{{  h.url_for(controller=controller, action=action) }}">
+    <div class="module module-narrow module-shallow box odn_right_square">
+      <div class="module-content search-form">
+            <img src="{{img}}"/>
+      </div>
+    </div>
+</a>

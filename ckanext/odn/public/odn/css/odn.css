@@ -166,3 +166,11 @@ a.odn_no_decoration:hover  {
 .dataset-resources .odn_resnum_badge {
     display: inline-block;
 }
+
+li.logo {
+    list-style-type: none;
+}
+
+li.logo img {
+    height: 50px;
+}

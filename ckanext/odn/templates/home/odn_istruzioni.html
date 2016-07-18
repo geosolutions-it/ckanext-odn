@@ -1,0 +1,20 @@
+{% extends "page.html" %}
+
+{% block subtitle %} Istruzioni {% endblock %}
+
+{% block breadcrumb_content %}
+  <li class="active">{% link_for _('Istruzioni'), controller='ckanext.odn.plugin_theme:ODNController', action='istruzioni' %}</li>
+{% endblock %}
+
+{% block primary %}
+  <article class="module">
+    <div class="module-content">
+      {% block about %}
+          <h1 class="page-heading"> Istruzioni </h1>
+          {% snippet 'home/snippets/istruzioni_text.html' %}
+      {% endblock %}
+    </div>
+  </article>
+{% endblock %}
+
+{% block secondary %}{% endblock %}

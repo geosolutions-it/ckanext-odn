@@ -174,3 +174,8 @@ li.logo {
 li.logo img {
     height: 50px;
 }
+
+.context-info h1.heading {
+    word-break: normal;
+    hyphens: none;
+}

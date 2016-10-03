@@ -1,0 +1,92 @@
+{% ckan_extends %}
+
+
+{% block resource_actions_inner %}
+            {% if h.check_access('package_update', {'id':pkg.id }) %}
+              <li>{% link_for _('Manage'), controller='package', action='resource_edit', id=pkg.name, resource_id=res.id, class_='btn', icon='wrench' %}</li>
+            {% endif %}
+
+            {% if  res.format in('TOLOMEO', 'WMS', 'WFS') %}
+                <!-- render button in tolomeo plugin -->
+                {# We're copying the tolomeo extension snippet here, since ckan_extends seems not to work iteratively #}
+                {% if res.format == 'WMS' %}
+                    <li>
+                        <a class="btn btn-success" target="_blank"
+                         href="{{ h.get_tolomeo_config().get('base_url') }}/html/servizi/cerco/cerco.html?paramPreset={{ h.get_tolomeo_config().get('preset') }}&#38;url1={{ res.url}}&#38;lay1={{ res.name}}" >
+                          <i class="icon-external-link"></i>Personalizza la mappa
+                      </a>
+                    </li>
+                {% elif res.format == 'TOLOMEO' %}
+                    <li>
+                        <a class="btn btn-success" target="_blank"
+                         href="{{ res.url}}" >
+                          <i class="icon-external-link"></i>Apri mappa
+                      </a>
+                    </li>
+                {% endif %}
+
+            {% elif res.url and h.is_url(res.url) %}
+              <li>
+                <a class="btn btn-primary resource-url-analytics resource-type-{{ res.resource_type }}" href="{{ res.url }}">
+                  {% if res.resource_type in ('listing', 'service') %}
+                    <i class="icon-eye-open"></i> {{ _('View') }}
+                  {% elif  res.resource_type == 'api' %}
+                    <i class="icon-key"></i> {{ _('API Endpoint') }}
+                  {% elif  res.resource_type in ('download', 'file.upload') %}
+                    <i class="icon-download"></i> {{ _('Download') }}
+                  {% elif not res.has_views or not res.can_be_previewed %}
+                    <i class="icon-external-link"></i> {{ _('Go to resource') }}
+                  {% else %}
+                    <i class="icon-download"></i> {{ _('Download') }}
+                  {% endif %}
+                </a>
+              </li>
+            {% endif %}
+            {% if 'datastore' in g.plugins %}
+              <li>{% snippet 'package/snippets/data_api_button.html', resource=res, datastore_root_url=c.datastore_api %}</li>
+            {% endif %}
+{% endblock %}
+
+
+{% block resource_additional_information %}
+    {% if res %}
+      <section class="module">
+        {% block resource_additional_information_inner %}
+        <div class="module-content">
+          <h2>{{ _('Additional Info') }}</h2>
+          <table class="table table-striped table-bordered table-condensed" data-module="table-toggle-more">
+            <thead hidden="1">
+              <tr>
+                <th scope="col">{{ _('Field') }}</th>
+                <th scope="col">{{ _('Value') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+
+<!--              <tr>
+                <th scope="row">{{ _('Last updated') }}</th>
+                <td>{{ h.render_datetime(res.last_modified) or h.render_datetime(res.revision_timestamp) or h.render_datetime(res.created) or _('unknown') }}</td>
+              </tr>
+              <tr>
+                <th scope="row">{{ _('Created') }}</th>
+                <td>{{ h.render_datetime(res.created) or _('unknown') }}</td>
+              </tr>-->
+              <tr>
+                <th scope="row">{{ _('License') }}</th>
+                <td>{% snippet "snippets/license.html", pkg_dict=pkg, text_only=True %}</td>
+              </tr>
+              <tr>
+                <th scope="row">{{ _('Format') }}</th>
+                <td>{{ res.format or _('unknown') }}</td>
+              </tr>
+              {% for key, value in h.format_resource_items(res.items()) %}
+                <tr class="toggle-more"><th scope="row">{{ key }}</th><td>{{ value }}</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% endblock %}
+      </section>
+    {% endif %}
+{% endblock %}
+

@@ -74,8 +74,8 @@ class OdnHarvesterPlugin(plugins.SingletonPlugin):
                 resources_to_delete.append(resource)
                 continue
 
-            if not resource['format']:
-                self._guess_format(resource, locator, package_dict)
+            # parse GN/ODN specific formats
+            self._guess_format(resource, locator, package_dict)
 
         for delendum in resources_to_delete:
             log.info('Removing resource %s', delendum['url'])
@@ -105,10 +105,11 @@ class OdnHarvesterPlugin(plugins.SingletonPlugin):
 
         # GN customization for CERCO
         if resource_locator.get('protocol','') == 'TOLOMEO:preset':
-            resource_type = 'TOLOMEO:preset'
+            resource_type = 'TOLOMEO'
             resource['verified'] = True
             resource['verified_date'] = datetime.now().isoformat()
-            resource_format = 'TOLOMEO:preset'
+            resource_format = 'TOLOMEO'
+            resource['name'] = resource_locator.get('name') or "Mappa"
         # GN specific WMS type
         elif resource_locator.get('protocol','') == 'OGC:WMS-1.3.0-http-get-map' or \
              resource_locator.get('protocol','') == 'OGC:WMS-1.1.1-http-get-map' :
@@ -121,6 +122,7 @@ class OdnHarvesterPlugin(plugins.SingletonPlugin):
         elif resource_locator.get('protocol','') == 'WWW:LINK-1.0-http--link' :
             resource['verified'] = True
             resource_type = 'link'
+            resource_format = resource.get('format')  # take original value if any
         #    resource_format = 'WMS'
         # GN downloadable resource
         elif resource_locator.get('protocol','') == 'WWW:DOWNLOAD-1.0-http--download':
@@ -135,11 +137,12 @@ class OdnHarvesterPlugin(plugins.SingletonPlugin):
                  resource_type = 'download'
                  resource_format = 'TGZ'
 
-        resource.update(
-            {
+        if resource_type:
+            resource.update(
+                {
                 'resource_type': resource_type,
                 'format': resource_format or None,
-            })
+                })
 
     def _find_responsible(self, responsible_parties , role):
         '''Find the first responsible info for the given role.

@@ -6,7 +6,7 @@
               <li>{% link_for _('Manage'), controller='package', action='resource_edit', id=pkg.name, resource_id=res.id, class_='btn', icon='wrench' %}</li>
             {% endif %}
 
-            {% if  res.format in('TOLOMEO', 'WMS', 'WFS') %}
+            {% if res.format in('TOLOMEO', 'TOLOMEO:preview', 'WMS', 'WFS') %}
                 <!-- render button in tolomeo plugin -->
                 {# We're copying the tolomeo extension snippet here, since ckan_extends seems not to work iteratively #}
                 {% if res.format == 'WMS' %}
@@ -16,7 +16,7 @@
                           <i class="icon-external-link"></i>Personalizza la mappa
                       </a>
                     </li>
-                {% elif res.format == 'TOLOMEO' %}
+                {% elif res.format in('TOLOMEO', 'TOLOMEO:preview') %}
                     <li>
                         <a class="btn btn-success" target="_blank"
                          href="{{ res.url}}" >

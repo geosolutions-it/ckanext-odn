@@ -31,6 +31,16 @@
 
    {{ super() }}
 
+   {# Rinomina badge TOLOMEO in WEBGIS (i badge TOLOMEO originali vanno rimossi lato CSS) #}
+    {% for resource in h.dict_list_reduce(package.resources, 'format') %}
+       {% if resource.lower() == 'tolomeo' %}
+          <li>
+             <a href="{{ h.url_for(controller='package', action='read', id=package.name) }}" class="label" data-format="webgis">WEBGIS</a>
+          </li>
+       {% endif %}
+     {% endfor %}
+
+
     {% if package.isopen %}
         <i class ="odn_license_badge">
               <img class="open-data" src="{{ h.url_for_static('/base/images/od_80x15_blue.png') }}" alt="[Open Data]" />

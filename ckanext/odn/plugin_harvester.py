@@ -104,12 +104,12 @@ class OdnHarvesterPlugin(plugins.SingletonPlugin):
 #                resource_format = 'WMS'
 
         # GN customization for CERCO
-        if resource_locator.get('protocol','') == 'TOLOMEO:preset':
+        if resource_locator.get('protocol','') in ('TOLOMEO:preset', 'TOLOMEO', 'WEBGIS'):
             resource_type = 'TOLOMEO'
             resource['verified'] = True
             resource['verified_date'] = datetime.now().isoformat()
-            resource_format = 'TOLOMEO'
-            resource['name'] = resource_locator.get('name') or "Mappa"
+            resource_format = 'WEBGIS'
+            resource['name'] = resource_locator.get('name') or "WEBGIS"
         # GN specific WMS type
         elif resource_locator.get('protocol','') == 'OGC:WMS-1.3.0-http-get-map' or \
              resource_locator.get('protocol','') == 'OGC:WMS-1.1.1-http-get-map' :
@@ -136,6 +136,38 @@ class OdnHarvesterPlugin(plugins.SingletonPlugin):
                  # this is a TGZ file
                  resource_type = 'download'
                  resource_format = 'TGZ'
+            if resource_locator.get('mimetype','') == 'application/pdf':
+                 resource_type = 'download'
+                 resource_format = 'PDF'
+            if resource_locator.get('mimetype','') == 'image/x-tiff':
+                 resource_type = 'download'
+                 resource_format = 'TIFF'
+        elif resource_locator.get('protocol','') == 'FILE:GEO':
+            resource['verified'] = True # ??
+            resource['verified_date'] = datetime.now().isoformat() # ??
+            if resource_locator.get('mimetype','') in ('application/x-compressed', 'application/zip', 'application/gnutar'):
+                 resource_type = 'download'
+                 resource_format = 'SHP'
+                 resource['name'] = resource_locator.get('name') or "Shapefile compresso"
+                 resource['description'] = resource_locator.get('description') or "Shapefile compresso"
+            if resource_locator.get('mimetype','') == 'image/x-tiff':
+                 resource_type = 'download'
+                 resource_format = 'TIF'
+                 resource['name'] = resource_locator.get('name') or "File raster"
+                 resource['description'] = resource_locator.get('description') or "File raster"
+        elif resource_locator.get('protocol','') == 'FILE:RASTER':
+            resource['verified'] = True # ??
+            resource['verified_date'] = datetime.now().isoformat() # ??
+            if resource_locator.get('mimetype','') in ('application/x-compressed', 'application/zip', 'application/gnutar'):
+                 resource_type = 'download'
+                 resource_format = 'TIF'
+                 resource['name'] = resource_locator.get('name') or "File raster compresso"
+                 resource['description'] = resource_locator.get('description') or "File raster compresso"
+            if resource_locator.get('mimetype','') == 'image/x-tiff':
+                 resource_type = 'download'
+                 resource_format = 'TIF'
+                 resource['name'] = resource_locator.get('name') or "File raster"
+                 resource['description'] = resource_locator.get('description') or "File raster"
 
         if resource_type:
             resource.update(

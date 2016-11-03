@@ -6,21 +6,21 @@
               <li>{% link_for _('Manage'), controller='package', action='resource_edit', id=pkg.name, resource_id=res.id, class_='btn', icon='wrench' %}</li>
             {% endif %}
 
-            {% if res.format in('TOLOMEO', 'TOLOMEO:preview', 'WMS', 'WFS') %}
+            {% if res.format in('TOLOMEO', 'TOLOMEO:preview', 'WMS', 'WFS', 'WEBGIS') %}
                 <!-- render button in tolomeo plugin -->
                 {# We're copying the tolomeo extension snippet here, since ckan_extends seems not to work iteratively #}
-                {% if res.format == 'WMS' %}
+                {% if res.format in ('WMS', 'WFS') %}
                     <li>
                         <a class="btn btn-success" target="_blank"
                          href="{{ h.get_tolomeo_config().get('base_url') }}/html/servizi/cerco/cerco.html?paramPreset={{ h.get_tolomeo_config().get('preset') }}&#38;url1={{ res.url}}&#38;lay1={{ res.name}}" >
                           <i class="icon-external-link"></i>Personalizza la mappa
                       </a>
                     </li>
-                {% elif res.format in('TOLOMEO', 'TOLOMEO:preview') %}
+                {% elif res.format in('TOLOMEO', 'TOLOMEO:preview', 'WEBGIS') %}
                     <li>
                         <a class="btn btn-success" target="_blank"
                          href="{{ res.url}}" >
-                          <i class="icon-external-link"></i>Apri mappa
+                          <i class="icon-external-link"></i>Apri WEBGIS
                       </a>
                     </li>
                 {% endif %}

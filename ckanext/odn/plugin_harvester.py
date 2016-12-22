@@ -50,10 +50,8 @@ class OdnHarvesterPlugin(plugins.SingletonPlugin):
         if mail:
             package_dict['author_email'] = mail
 
-        if iso_values['dataset-reference-date'] and len(iso_values['dataset-reference-date']):
-            package_dict['version'] = "{} - {}".format(
-                iso_values['dataset-reference-date'][0]['type'],
-                iso_values['dataset-reference-date'][0]['value'])
+        for key in ('date-released', 'date-updated'):
+            package_dict['extras'].append({'key': key, 'value': iso_values.get(key)})
 
         resource_locators = iso_values.get('resource-locator', [])
         self._update_resources(package_dict['resources'], resource_locators, package_dict)

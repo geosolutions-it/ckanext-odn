@@ -126,7 +126,7 @@ class OdnHarvesterPlugin(plugins.SingletonPlugin):
         elif resource_locator.get('protocol','') == 'WWW:DOWNLOAD-1.0-http--download':
             resource['verified'] = True # ??
             resource['verified_date'] = datetime.now().isoformat() # ??
-            if resource_locator.get('mimetype','') == 'application/x-compressed':
+            if resource_locator.get('mimetype','') in ('application/x-compressed', 'application/zip'):
                  # this is a ZIP file
                  resource_type = 'download'
                  resource_format = 'ZIP'

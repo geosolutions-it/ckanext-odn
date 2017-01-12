@@ -5,8 +5,9 @@ ckanext-odn
 Estensione per OpenDataNetwork.
 
 Fornisce 2 plugin:
+
 - ``odn_theme``: customizzazione GUI
-- ``odn_harvest``: ridefinisce alcuni comportamenti dell'harvester spaziale.'
+- ``odn_harvest``: ridefinisce alcuni comportamenti dell'harvester spaziale.
 
 
 ------------
@@ -15,20 +16,20 @@ Requirements
 
 Sviluppato e testato su CKAN 2.5.2.
 
-Richiede che sia installato il plugin spatial-harvester.
+Richiede che sia installato il plugin *spatial-harvester*.
 
 
 ------------
 Installation
 ------------
 
-To install ckanext-odn:
+To install *ckanext-odn*:
 
 1. Activate your CKAN virtual environment, for example::
 
      . /usr/lib/ckan/default/bin/activate
 
-2. Install the ckanext-odn Python package into your virtual environment::
+2. Install the *ckanext-odn* Python package into your virtual environment::
 
      pip install ckanext-odn
 
@@ -45,17 +46,18 @@ To install ckanext-odn:
 Config Settings
 ---------------
 
-``odn.map_link``
+- ``odn.map_link``
 
-    The URL where the map link in the home page should point to. E.g.::
+  The URL where the map link in the home page should point to. E.g.::
       
-       odn.map_link = http://www.opendatanetwork.it/tolomeo/html/servizi/cerco/cerco.html?paramPreset=Cerco
+     odn.map_link = http://www.opendatanetwork.it/tolomeo/html/servizi/cerco/cerco.html?paramPreset=Cerco
+   
 
 ------------------------
 Development Installation
 ------------------------
 
-To install ckanext-odn for development, activate your CKAN virtualenv and
+To install *ckanext-odn* for development, activate your CKAN virtualenv and
 do::
 
     git clone https://github.com/geosolution-it/ckanext-odn.git

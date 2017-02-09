@@ -1,3 +1,5 @@
+import re
+
 from datetime import datetime
 import logging
 
@@ -5,6 +7,13 @@ import ckan.plugins as plugins
 
 import ckanext.spatial.model.harvested_metadata as s
 from ckanext.spatial.interfaces import ISpatialHarvester
+
+from ckan.lib.base import model
+from ckan.model import Session
+
+from ckanext.harvest.model import HarvestSource
+
+import json
 
 log = logging.getLogger(__name__)
 
@@ -37,6 +46,11 @@ class OdnHarvesterPlugin(plugins.SingletonPlugin):
 
     # ISpatialHarvester method
     def get_package_dict(self, context, data_dict):
+    	# Getting the harvest source config
+    	harvest_source_id = data_dict['harvest_object'].harvest_source_id
+    	harvest_source = model.Session.query(HarvestSource).filter(HarvestSource.id == harvest_source_id).first()
+
+    	source_config = json.loads(harvest_source.config)
 
         package_dict = data_dict['package_dict']
         iso_values = data_dict['iso_values']
@@ -56,13 +70,25 @@ class OdnHarvesterPlugin(plugins.SingletonPlugin):
         resource_locators = iso_values.get('resource-locator', [])
         self._update_resources(package_dict['resources'], resource_locators, package_dict)
 
+        # Getting the validation regex or use default to remove any special character from the tag(keyword) string
+        tag_validation_regex = source_config.get('tag_validation_regex', ur'[^\w\d_\ \-\\\']')
+        tag_re = re.compile(tag_validation_regex, re.UNICODE)
+
+        tags = []
+        if 'tags' in iso_values:
+            for tag in iso_values['tags']:
+                tag = tag_re.sub(' ', tag)
+                tags.append({'name': tag})
+
+            package_dict['tags'] = tags
+
         return package_dict
 
 
     def _update_resources(self, resources, locators, package_dict):
         # @type resources: list
         # @type locators: list
-        
+
         # l'harvester originale include anche onlineResource esterni a Distribution, che vanno eliminati
         resources_to_delete = []
 
@@ -111,7 +137,7 @@ class OdnHarvesterPlugin(plugins.SingletonPlugin):
         # GN specific WMS type
         elif resource_locator.get('protocol','') == 'OGC:WMS-1.3.0-http-get-map' or \
              resource_locator.get('protocol','') == 'OGC:WMS-1.1.1-http-get-map' :
-                 
+
             resource_type='WMS'
             resource_format = 'WMS'
             resource['verified'] = True

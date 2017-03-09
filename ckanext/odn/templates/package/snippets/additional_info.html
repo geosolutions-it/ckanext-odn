@@ -5,12 +5,21 @@
       {% block package_additional_info %}
 
         {% set gnurl = h.get_pkg_dict_extra(pkg_dict, 'gn_url') %}
-        {% set guid  = h.get_pkg_dict_extra(pkg_dict, 'guid') %}
+        {% set guid  = h.get_pkg_dict_extra(pkg_dict, 'guid') or h.get_pkg_dict_extra(pkg_dict, 'GUID') %}
 
         {% if gnurl %}
           <tr>
             <th scope="row" class="dataset-label">Informazioni sul dato</th>
             <td class="dataset-details" property="dc:relation"><a href='{{gnurl}}/srv/ita/metadata.show?uuid={{guid}}' target='_blank'>Metadato completo</a></td>
+          </tr>
+        {% elif pkg_dict.url %}
+          <tr>
+            <th scope="row" class="dataset-label">Informazioni sul dato</th>
+            {% if h.is_url(pkg_dict.url) %}
+              <td class="dataset-details" property="foaf:homepage">{{ h.link_to(pkg_dict.url, pkg_dict.url, rel='foaf:homepage', target='_blank') }}</td>
+            {% else %}
+              <td class="dataset-details" property="foaf:homepage">{{ pkg_dict.url }}</td>
+            {% endif %}
           </tr>
         {% endif %}
 

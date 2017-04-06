@@ -75,9 +75,9 @@ class OdnHarvesterPlugin(plugins.SingletonPlugin):
         tag_re = re.compile(tag_validation_regex, re.UNICODE)
 
         tags = []
-        if 'tags' in iso_values:
-            for tag in iso_values['tags']:
-                tag = tag_re.sub(' ', tag)
+        if 'tags' in package_dict:
+            for tag in package_dict['tags']:
+                tag = tag_re.sub(' ', tag['name'])
                 tags.append({'name': tag})
 
             package_dict['tags'] = tags

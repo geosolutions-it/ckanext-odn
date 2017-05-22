@@ -22,7 +22,7 @@ def recent_updates(n):
                'session': model.Session,
                'user': p.toolkit.c.user or p.toolkit.c.author}
     data = {'rows': n,
-            'sort': u'modified_date desc',
+            'sort': u'metadata_modified desc',
             'facet': u'false',
             'fq': u'capacity: "public"'}
     try:

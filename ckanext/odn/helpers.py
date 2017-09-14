@@ -23,8 +23,7 @@ def recent_updates(n):
                'user': p.toolkit.c.user or p.toolkit.c.author}
     data = {'rows': n,
             'sort': u'metadata_modified desc',
-            'facet': u'false',
-            'fq': u'capacity: "public"'}
+            'facet': u'false'}
     try:
         search_results = p.toolkit.get_action('package_search')(context, data)
     except search.SearchError:
@@ -32,7 +31,7 @@ def recent_updates(n):
         log.error(e)
         search_results = {}
 
-    log.error('Found %d recent updates ' % len(search_results))
+#    log.error('Found %d recent updates ' % len(search_results))
 #    log.error('Updates:  %r ' % search_results)
     return search_results.get('results', [])
 

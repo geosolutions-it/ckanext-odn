@@ -30,7 +30,7 @@
                     <div class="odn_group_grid module_search box">
                         <h3 class="heading">Categorie</h3>
 
-                        {% set groups = h.group_list(6) %}
+                        {% set groups = h.group_list(13) %}
 
                         {% for group in groups %}
                             {% set url = h.url_for(controller='group', action='read', id=group.name) %}
